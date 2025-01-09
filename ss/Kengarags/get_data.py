@@ -45,3 +45,4 @@ with open(path, 'w', encoding='utf-8', newline='') as csvfile:
     writer.writerow(fields)
     writer.writerows(apartments)
 
+# comment
