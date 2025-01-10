@@ -5,12 +5,12 @@ date_now = f'{datetime.datetime.now().date()}'
 symbol = '€'
 
 fields = ['Date',
+        'District',
         'Street',
         'Rooms',
         'm2',
         'Floor',
         'Serie',
-        f'{symbol}/m2',
         'Price',
         ]
 apartments = []
@@ -62,9 +62,16 @@ apartments = []
 
 page_num = 1
 
+
+def add_to_array(array, data):
+    array.append(data)
+
 while True:
     page = requests.get(url + f'page{page_num}.html')
     soup = bs4.BeautifulSoup(page.text, 'lxml')
+
+    for b in soup.find_all('b'):
+        b.replaceWithChildren()
 
     btn = soup.find_all('button', {'class': 'navia'})[0]
     btn_text = btn.get_text()
@@ -79,15 +86,28 @@ while True:
         cols = row.find_all('td')[3:]
         row_arr = []
         row_arr.append(date_now)
+
         for col in cols:
-            txt = col.get_text()
-            
-            if symbol in txt:
-                txt = txt.replace(symbol, '').strip()
-            row_arr.append(txt)
+            col_data_arr = [x for x in col.contents if getattr(x, 'name', None) != 'br']
+            if len(col_data_arr) > 1:
+                for c in col_data_arr:
+                    if symbol in c:
+                        c = c.replace(symbol, '').strip()
+                    if len(c) > 0:
+                        c = c.replace(',', '')
+                        add_to_array(row_arr, c)
+            else:
+                c = col_data_arr[0]
+                if symbol in c:
+                        c = c.replace(symbol, '').strip()
+                        c = c.replace(',', '')
+                add_to_array(row_arr, c)
+
         apartments.append(row_arr)
+        # print(row_arr)
 
     page_num += 1
+    # break
 
 print(len(apartments))
 
