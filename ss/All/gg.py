@@ -46,7 +46,6 @@ async def main():
             print(page_num, end=' ', flush=True)
             table = await fetch_page(session, page_num)
             if table is None:
-                print()
                 break
             full_df = pd.concat([full_df, table], ignore_index=True)
             page_num += 1
