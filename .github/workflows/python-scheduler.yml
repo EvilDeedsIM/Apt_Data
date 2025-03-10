@@ -23,4 +23,4 @@ jobs:
           pip install -r requirements.txt  # Если у вас есть зависимости
 
       - name: Run the Python script
-        run: python .ss/All/get_data.py  # Укажите путь к вашему скрипту
+        run: python ss/All/get_data.py  # Укажите путь к вашему скрипту
