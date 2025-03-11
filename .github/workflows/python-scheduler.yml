@@ -23,4 +23,10 @@ jobs:
           pip install -r requirements.txt  # Если у вас есть зависимости
 
       - name: Run the Python script
-        run: python ss/All/test.py  # Укажите путь к вашему скрипту
+        run: 
+            python ss/All/test.py
+            git config user.name github-actions
+            git config user.email github-actions@github.com
+            git add .
+            git commit -m "Data update"
+            git push
