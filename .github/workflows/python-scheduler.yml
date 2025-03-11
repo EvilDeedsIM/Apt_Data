@@ -2,7 +2,7 @@ name: Run Python script on schedule
 
 on:
   schedule:
-    - cron: '0 18 * * *'  # Каждый день в 16:00 (UTC)
+    - cron: '0 18 * * *'  # Каждый день в 18:00 (UTC)
   workflow_dispatch:  # Также можно запускать вручную через интерфейс
 
 jobs:
@@ -10,21 +10,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v2  # Клонирование репозитория
+        uses: actions/checkout@v2
 
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x'  # Выберите подходящую версию Python
+          python-version: '3.x'
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt  # Если у вас есть зависимости
+          pip install -r requirements.txt
 
       - name: Run the Python script
         run: |
-            python ss/All/test.py
+            python ss/All/get_data.py
             git config user.name github-actions
             git config user.email github-actions@github.com
             git add .
