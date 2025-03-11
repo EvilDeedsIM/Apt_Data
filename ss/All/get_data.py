@@ -65,7 +65,7 @@ async def main():
         print(full_df)
 
         # Сохранение в CSV
-        path = f'csv/{date_now}.csv'
+        path = f'ss/All/csv/{date_now}.csv'
         full_df.to_csv(path, index=False)
 
 # Замер времени
